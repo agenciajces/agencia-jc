@@ -42,6 +42,30 @@
                          "sector":  "restaurantes",
                          "url":  "https://agenciajces.github.io/proyectoweb-el-farol/",
                          "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "Tradiciones Peruanas pisco bar",
+                         "sector":  "restaurantes",
+                         "url":  "https://github.com/",
+                         "tipo":  "repo"
+                     },
+                     {
+                         "nombre":  "Chennai Indian Cuisine",
+                         "sector":  "restaurantes",
+                         "url":  "https://agenciajces.github.io/proyectoweb-chennai-indian-cuisine/",
+                         "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "Yoinyo pizza",
+                         "sector":  "restaurantes",
+                         "url":  "https://agenciajces.github.io/proyectoweb-yoinyo-pizza/",
+                         "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "Restaurante Il Portone",
+                         "sector":  "restaurantes",
+                         "url":  "https://github.com/",
+                         "tipo":  "repo"
                      }
                  ]
 }
