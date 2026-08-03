@@ -30,6 +30,12 @@
                          "sector":  "Hamburguesería",
                          "url":  "https://agenciajces.github.io/proyectoweb-arde-social-cooking/",
                          "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "La Gabarra Cocina Vasca",
+                         "sector":  "Restaurante vasco (asador y marisquería)",
+                         "url":  "https://agenciajces.github.io/proyectoweb-la-gabarra-cocina-vasca/",
+                         "tipo":  "web"
                      }
                  ]
 }
