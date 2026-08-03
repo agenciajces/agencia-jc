@@ -46,8 +46,8 @@
                      {
                          "nombre":  "Tradiciones Peruanas pisco bar",
                          "sector":  "restaurantes",
-                         "url":  "https://github.com/",
-                         "tipo":  "repo"
+                         "url":  "https://agenciajces.github.io/proyectoweb-tradiciones-peruanas-pisco-bar/",
+                         "tipo":  "web"
                      },
                      {
                          "nombre":  "Chennai Indian Cuisine",
@@ -63,9 +63,9 @@
                      },
                      {
                          "nombre":  "Restaurante Il Portone",
-                         "sector":  "restaurantes",
-                         "url":  "https://github.com/",
-                         "tipo":  "repo"
+                         "sector":  "Restaurante italiano",
+                         "url":  "https://agenciajces.github.io/proyectoweb-restaurante-il-portone/",
+                         "tipo":  "web"
                      }
                  ]
 }
