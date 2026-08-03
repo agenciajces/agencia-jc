@@ -18,6 +18,18 @@
                          "sector":  "Bar americano",
                          "url":  "https://agenciajces.github.io/proyectoweb-boot-hill/",
                          "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "Contraste",
+                         "sector":  "Cervecería",
+                         "url":  "https://agenciajces.github.io/proyectoweb-contraste/",
+                         "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "Arde Social Cooking",
+                         "sector":  "Hamburguesería",
+                         "url":  "https://agenciajces.github.io/proyectoweb-arde-social-cooking/",
+                         "tipo":  "web"
                      }
                  ]
 }
