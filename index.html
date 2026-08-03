@@ -16,6 +16,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+
+<!-- Se aplica el tema antes de pintar para evitar el fogonazo blanco
+     al cargar en modo oscuro. -->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('ajc.theme');
+      var dark = saved ? saved === 'dark'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    } catch (e) { }
+  })();
+</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='71' font-size='58' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>JC</text></svg>">
 
 <script type="application/ld+json">
@@ -24,7 +37,7 @@
   "@type": "ProfessionalService",
   "name": "Agencia JC",
   "description": "Diseño y desarrollo de páginas web para negocios locales.",
-  "email": "hola@jagcweb.es",
+  "email": "contacto@agenciajc.es",
   "telephone": "+34666225457",
   "areaServed": "ES",
   "address": { "@type": "PostalAddress", "addressLocality": "Madrid", "addressCountry": "ES" },
@@ -53,9 +66,16 @@
     <a href="#contacto" class="btn btn--sm btn--primary">Pide presupuesto</a>
   </nav>
 
-  <button class="nav__burger" id="navBurger" aria-label="Menú" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav__tools">
+    <button class="theme" id="themeBtn" type="button" aria-label="Cambiar entre modo claro y oscuro">
+      <svg class="theme__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M4.2 4.2l1.9 1.9M17.9 17.9l1.9 1.9M2 12h2.6M19.4 12H22M4.2 19.8l1.9-1.9M17.9 6.1l1.9-1.9"/></svg>
+      <svg class="theme__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+
+    <button class="nav__burger" id="navBurger" aria-label="Menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <!-- ================= HERO ================= -->
@@ -90,7 +110,6 @@
     <div class="proof reveal"><b>+6</b><span>años desarrollando software</span></div>
     <div class="proof reveal"><b>+25</b><span>proyectos entregados</span></div>
     <div class="proof reveal"><b>+10</b><span>clientes y empresas</span></div>
-    <div class="proof reveal"><b>Madrid</b><span>presencial o en remoto</span></div>
   </div>
 </section>
 
@@ -108,17 +127,17 @@
 
     <div class="problem__grid">
       <article class="pcard reveal">
-        <span class="pcard__x">✕</span>
+        <span class="pcard__x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
         <h3>No tienes web</h3>
         <p>Tu negocio depende de que alguien pase por delante o de que un conocido lo recomiende. Todo lo demás lo estás perdiendo.</p>
       </article>
       <article class="pcard reveal">
-        <span class="pcard__x">✕</span>
+        <span class="pcard__x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
         <h3>Tienes una de hace años</h3>
         <p>Se ve mal en el móvil, tarda en cargar y sigue poniendo un horario que ya no es el tuyo. Da peor imagen que no tener nada.</p>
       </article>
       <article class="pcard reveal">
-        <span class="pcard__x">✕</span>
+        <span class="pcard__x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
         <h3>Solo tienes redes sociales</h3>
         <p>Están bien, pero no las controlas tú y nadie encuentra ahí tu carta ni cómo llegar. Una web es tuya para siempre.</p>
       </article>
@@ -135,34 +154,47 @@
       <p>Sin letra pequeña ni módulos que se pagan aparte.</p>
     </div>
 
+    <!-- Iconos de Lucide (MIT), incrustados para no depender de ningún CDN. -->
     <div class="services__grid">
       <article class="scard reveal">
-        <div class="scard__ico">📱</div>
+        <div class="scard__ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M12 18h.01"/></svg>
+        </div>
         <h3>Diseño para móvil</h3>
         <p>La mayoría de tus clientes te va a buscar desde el móvil. La web se diseña pensando en eso primero, y luego para ordenador.</p>
       </article>
       <article class="scard reveal">
-        <div class="scard__ico">🍽️</div>
+        <div class="scard__ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+        </div>
         <h3>Tu carta o catálogo</h3>
         <p>Lo que vendes, ordenado y fácil de leer. Con fotos si las tienes, y preparado para actualizarlo cuando cambien los precios.</p>
       </article>
       <article class="scard reveal">
-        <div class="scard__ico">📍</div>
+        <div class="scard__ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
         <h3>Mapa y cómo llegar</h3>
         <p>Tu ubicación integrada, con un botón que abre el GPS del cliente directamente. Y tu horario, marcando si estás abierto ahora.</p>
       </article>
       <article class="scard reveal">
-        <div class="scard__ico">💬</div>
+        <div class="scard__ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        </div>
         <h3>Contacto directo</h3>
         <p>Botones de llamar y de WhatsApp siempre visibles. El cliente te escribe en dos toques, sin rellenar formularios.</p>
       </article>
       <article class="scard reveal">
-        <div class="scard__ico">🔍</div>
+        <div class="scard__ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
         <h3>Preparada para Google</h3>
         <p>Con los datos de tu negocio estructurados como Google los pide, para que aparezcas cuando alguien te busque por tu nombre.</p>
       </article>
       <article class="scard reveal">
-        <div class="scard__ico">⚡</div>
+        <div class="scard__ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+        </div>
         <h3>Rápida de verdad</h3>
         <p>Sin plantillas cargadas de cosas que no usas. Carga al instante, que es lo que marca la diferencia entre quedarse o irse.</p>
       </article>
@@ -245,8 +277,8 @@
       <div>
         <h3>¿Y el mantenimiento?</h3>
         <p>
-          Opcional. <strong>25 € al mes</strong> según el plan: incluye el dominio, las copias
-          de seguridad, que la web siga funcionando y pequeños cambios.
+          Opcional. <strong>25 € al mes</strong>: incluye el dominio, copias
+          de seguridad y pequeños cambios.
         </p>
       </div>
       <a href="#contacto" class="btn btn--light">Preguntar por el mantenimiento</a>
@@ -295,13 +327,14 @@
       <span class="eyebrow">Quién hay detrás</span>
       <h2>No es un hobby de fin de semana</h2>
       <p>
-        Agencia JC la lleva un desarrollador con <strong>más de 6 años trabajando en
-        software profesional</strong>, no solo haciendo páginas. Durante ese tiempo he
-        desarrollado y mantenido sistemas para empresas donde un fallo se nota de verdad.
+        En Agencia JC llevamos <strong>más de 6 años desarrollando software
+        profesional</strong>, no solo páginas. En ese tiempo hemos construido y mantenido
+        sistemas para empresas donde un fallo se nota de verdad.
       </p>
       <p>
-        Esa misma forma de trabajar es la que aplico a la web de tu bar o de tu tienda:
-        código propio, sin plantillas genéricas, y algo que funcione dentro de tres años.
+        Esa misma forma de trabajar es la que aplicamos a la web de tu bar o de tu tienda:
+        código propio, sin plantillas genéricas, y algo que siga funcionando dentro de
+        tres años.
       </p>
 
       <div class="trust__logos">
@@ -340,20 +373,13 @@
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Trabajos</span>
-      <h2>Algunos proyectos que hemos desarrollado</h2>
-      <p>Desde plataformas completas hasta webs de negocio.</p>
+      <h2>Webs que hemos hecho</h2>
+      <p>Entra y míralas por dentro. Así queda una web nuestra.</p>
     </div>
 
-    <div class="work__grid">
-      <article class="wcard reveal"><h3>Soinuka</h3><p>Plataforma web completa</p><span>Laravel</span></article>
-      <article class="wcard reveal"><h3>Hotspania</h3><p>Plataforma web completa</p><span>Laravel</span></article>
-      <article class="wcard reveal"><h3>Diavla Hookah</h3><p>Web de negocio y tienda</p><span>Laravel</span></article>
-      <article class="wcard reveal"><h3>DiavlaB2B</h3><p>Portal para mayoristas</p><span>PHP</span></article>
-      <article class="wcard reveal"><h3>EncuentraPianista</h3><p>Plataforma de contacto</p><span>Web</span></article>
-      <article class="wcard reveal"><h3>Kooperador</h3><p>Plataforma con pagos online</p><span>Laravel · Stripe</span></article>
-      <article class="wcard reveal"><h3>Niolshots</h3><p>Aplicación web y API</p><span>React · Node.js</span></article>
-      <article class="wcard reveal"><h3>Marketplace ETH</h3><p>Marketplace descentralizado</p><span>Next.js · Web3</span></article>
-    </div>
+    <!-- Se rellena desde trabajos.json, que genera scripts/sync-trabajos.ps1
+         a partir de data/leads.json. No editar a mano. -->
+    <div class="work__grid" id="workGrid"></div>
   </div>
 </section>
 
@@ -388,7 +414,7 @@
       </details>
       <details class="qa reveal">
         <summary>¿Y si al final no me convence?</summary>
-        <p>Te enseñamos la web hecha antes de que pagues nada. Si no te convence, no hay trato y no debes nada. Nos parece la forma más justa de trabajar.</p>
+        <p>No adquieres ningún compromiso de pago. Primero hacemos la web y te la enseñamos terminada, la ves con calma en tu móvil y la enseñas a quien quieras. <strong>Solo si te convence hablamos de precio y cerramos el trato.</strong> Si no, no nos debes nada y ahí queda la cosa. Preferimos que veas el trabajo antes de pedirte un euro.</p>
       </details>
     </div>
   </div>
@@ -408,28 +434,36 @@
 
       <ul class="contact__list">
         <li>
-          <span class="ci">💬</span>
+          <span class="ci ci--wa">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg>
+          </span>
           <div>
             <strong>WhatsApp</strong>
             <a href="https://wa.me/34666225457" target="_blank" rel="noopener">+34 666 225 457</a>
           </div>
         </li>
         <li>
-          <span class="ci">📞</span>
+          <span class="ci">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          </span>
           <div>
             <strong>Teléfono</strong>
             <a href="tel:+34666225457">+34 666 225 457</a>
           </div>
         </li>
         <li>
-          <span class="ci">✉️</span>
+          <span class="ci">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </span>
           <div>
             <strong>Email</strong>
-            <a href="mailto:hola@jagcweb.es">hola@jagcweb.es</a>
+            <a href="mailto:contacto@agenciajc.es">contacto@agenciajc.es</a>
           </div>
         </li>
         <li>
-          <span class="ci">📍</span>
+          <span class="ci">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
           <div>
             <strong>Dónde estamos</strong>
             <span class="plain">Madrid · trabajamos para toda España</span>
@@ -472,7 +506,12 @@
         <textarea id="f-mensaje" name="mensaje" rows="4"></textarea>
       </div>
 
-      <button type="submit" class="btn btn--primary btn--block btn--lg">Enviar por WhatsApp</button>
+      <button type="submit" class="btn btn--primary btn--block btn--lg">
+        <svg class="ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/>
+        </svg>
+        Enviar por WhatsApp
+      </button>
       <button type="button" class="btn btn--ghost btn--block" id="byMail">Prefiero enviarlo por email</button>
 
       <p class="form__legal">Solo usamos tus datos para responderte. Ni spam ni cesión a terceros.</p>
@@ -514,7 +553,7 @@
         <h4>Contacto</h4>
         <a href="https://wa.me/34666225457" target="_blank" rel="noopener">WhatsApp</a>
         <a href="tel:+34666225457">+34 666 225 457</a>
-        <a href="mailto:hola@jagcweb.es">hola@jagcweb.es</a>
+        <a href="mailto:contacto@agenciajc.es">contacto@agenciajc.es</a>
       </nav>
     </div>
 
@@ -526,8 +565,8 @@
 </footer>
 
 <a href="https://wa.me/34666225457" class="wa" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 12a9 9 0 0 1-13.2 8L3 21l1-4.8A9 9 0 1 1 21 12Z"/>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/>
   </svg>
 </a>
 

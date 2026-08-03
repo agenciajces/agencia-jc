@@ -6,7 +6,7 @@
   'use strict';
 
   var PHONE = '34666225457';
-  var EMAIL = 'hola@jagcweb.es';
+  var EMAIL = 'contacto@agenciajc.es';
 
   /* ---------- Nav pegajosa + WhatsApp flotante ---------- */
   var nav = document.getElementById('nav');
@@ -43,6 +43,37 @@
   }, { passive: true });
 
   apply();
+
+  /* ---------- Modo claro / oscuro ----------
+     El tema inicial ya lo aplica el script en línea del <head>, para que no
+     haya fogonazo blanco al cargar en oscuro. Aquí solo va el interruptor. */
+  var themeBtn = document.getElementById('themeBtn');
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  function paintMeta() {
+    if (themeMeta) {
+      themeMeta.content = document.documentElement.dataset.theme === 'dark' ? '#0e1018' : '#ffffff';
+    }
+  }
+  paintMeta();
+
+  themeBtn.addEventListener('click', function () {
+    var dark = document.documentElement.dataset.theme !== 'dark';
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    paintMeta();
+    try { localStorage.setItem('ajc.theme', dark ? 'dark' : 'light'); } catch (e) { }
+  });
+
+  // Si el visitante no ha elegido tema, seguimos al sistema si lo cambia.
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+      var chosen = null;
+      try { chosen = localStorage.getItem('ajc.theme'); } catch (err) { }
+      if (chosen) return;
+      document.documentElement.dataset.theme = e.matches ? 'dark' : 'light';
+      paintMeta();
+    });
+  }
 
   /* ---------- Menú móvil ---------- */
   var burger = document.getElementById('navBurger');
@@ -150,6 +181,50 @@
   form.querySelectorAll('input, textarea').forEach(function (el) {
     el.addEventListener('input', function () { el.classList.remove('is-error'); });
   });
+
+  /* ---------- Trabajos ----------
+     Se leen de trabajos.json, que genera scripts/sync-trabajos.ps1 a partir
+     de data/leads.json. Si un lead tiene Pages activo enlazamos la web; si
+     no, el repositorio. */
+  var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function pintarTrabajos(lista) {
+    var grid = document.getElementById('workGrid');
+    var seccion = document.getElementById('trabajos');
+    if (!grid) return;
+
+    if (!lista || !lista.length) {
+      // Sin trabajos que enseñar, mejor ocultar la sección que dejarla vacía.
+      if (seccion) seccion.hidden = true;
+      return;
+    }
+
+    grid.innerHTML = lista.map(function (t) {
+      var esRepo = t.tipo === 'repo';
+      return '<a class="wcard reveal' + (esRepo ? ' wcard--repo' : '') + '"' +
+        ' href="' + esc(t.url) + '" target="_blank" rel="noopener">' +
+        '<h3>' + esc(t.nombre) + '</h3>' +
+        (t.sector ? '<p>' + esc(t.sector) + '</p>' : '<p></p>') +
+        '<span class="wcard__go">' + (esRepo ? 'Ver el código' : 'Ver la web') + ARROW + '</span>' +
+        '</a>';
+    }).join('');
+
+    // Las tarjetas nacen después del observer inicial, hay que observarlas.
+    grid.querySelectorAll('.reveal').forEach(function (el) {
+      if (io) { io.observe(el); } else { el.classList.add('is-in'); }
+    });
+  }
+
+  fetch('trabajos.json', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) { pintarTrabajos(data && data.trabajos); })
+    .catch(function () { pintarTrabajos(null); });
 
   /* ---------- Año del footer ---------- */
   document.getElementById('year').textContent = new Date().getFullYear();
