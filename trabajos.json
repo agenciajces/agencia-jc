@@ -2,12 +2,6 @@
     "actualizado":  "2026-08-03",
     "trabajos":  [
                      {
-                         "nombre":  "Burger Guay",
-                         "sector":  "Hamburguesería",
-                         "url":  "https://agenciajces.github.io/proyectoweb-burger-guay/",
-                         "tipo":  "web"
-                     },
-                     {
                          "nombre":  "The Shelter Protein Bar",
                          "sector":  "Bar de proteina / comida saludable",
                          "url":  "https://agenciajces.github.io/proyectoweb-the-shelter-protein-bar/",
@@ -35,6 +29,12 @@
                          "nombre":  "La Gabarra Cocina Vasca",
                          "sector":  "Restaurante vasco (asador y marisquería)",
                          "url":  "https://agenciajces.github.io/proyectoweb-la-gabarra-cocina-vasca/",
+                         "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "Restaurante Onneca",
+                         "sector":  "Restaurante de cocina de mercado",
+                         "url":  "https://agenciajces.github.io/proyectoweb-restaurante-onneca/",
                          "tipo":  "web"
                      }
                  ]
