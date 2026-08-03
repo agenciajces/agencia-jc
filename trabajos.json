@@ -6,6 +6,18 @@
                          "sector":  "Hamburguesería",
                          "url":  "https://agenciajces.github.io/proyectoweb-burger-guay/",
                          "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "The Shelter Protein Bar",
+                         "sector":  "Bar de proteina / comida saludable",
+                         "url":  "https://agenciajces.github.io/proyectoweb-the-shelter-protein-bar/",
+                         "tipo":  "web"
+                     },
+                     {
+                         "nombre":  "Boot Hill",
+                         "sector":  "Bar americano",
+                         "url":  "https://agenciajces.github.io/proyectoweb-boot-hill/",
+                         "tipo":  "web"
                      }
                  ]
 }
