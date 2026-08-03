@@ -12,13 +12,37 @@
   var nav = document.getElementById('nav');
   var wa = document.querySelector('.wa');
 
-  function onScroll() {
+  // El scroll dispara decenas de eventos por segundo. Lo agrupamos en un
+  // rAF y solo tocamos el DOM cuando el estado cambia de verdad: escribir
+  // clases en cada evento forzaba un recalculo de estilos continuo.
+  var ticking = false;
+  var stuck = null;
+  var waShown = null;
+
+  function apply() {
+    ticking = false;
     var y = window.scrollY;
-    nav.classList.toggle('is-stuck', y > 30);
-    wa.classList.toggle('is-visible', y > 420);
+
+    var nowStuck = y > 30;
+    if (nowStuck !== stuck) {
+      stuck = nowStuck;
+      nav.classList.toggle('is-stuck', nowStuck);
+    }
+
+    var nowWa = y > 420;
+    if (nowWa !== waShown) {
+      waShown = nowWa;
+      wa.classList.toggle('is-visible', nowWa);
+    }
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(apply);
+  }, { passive: true });
+
+  apply();
 
   /* ---------- Menú móvil ---------- */
   var burger = document.getElementById('navBurger');

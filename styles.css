@@ -131,11 +131,14 @@ ul, ol { list-style: none; }
   padding: 16px clamp(18px, 5vw, 40px);
   transition: background .3s, box-shadow .3s, padding .3s;
 }
+/* Sin backdrop-filter a proposito: en una barra fija obliga al navegador a
+   releer y desenfocar lo que hay debajo en cada frame del scroll, que era la
+   causa principal de los tirones. Un fondo casi opaco da el mismo resultado
+   visual y es gratis. */
 .nav.is-stuck {
   padding-top: 11px;
   padding-bottom: 11px;
-  background: rgba(255, 255, 255, .88);
-  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, .97);
   box-shadow: 0 1px 0 var(--line), 0 8px 30px -22px rgba(20, 23, 42, .5);
 }
 
@@ -188,8 +191,7 @@ ul, ol { list-style: none; }
     flex-direction: column;
     justify-content: center;
     gap: 26px;
-    background: rgba(255, 255, 255, .98);
-    backdrop-filter: blur(16px);
+    background: #fff;
     transform: translateX(100%);
     transition: transform .38s var(--ease);
   }
@@ -204,16 +206,24 @@ ul, ol { list-style: none; }
   text-align: center;
   overflow: hidden;
 }
+
+/* El fondo del hero es estatico. Se aisla en su propia capa de composicion
+   para que el scroll no lo repinte: sin esto, los gradientes y la rejilla
+   se recalculan en cada frame y la pagina va a tirones. */
 .hero__bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  transform: translateZ(0);
+  contain: strict;
   background:
-    radial-gradient(760px 460px at 50% -6%, rgba(124, 92, 255, .17), transparent 66%),
-    radial-gradient(600px 400px at 88% 24%, rgba(0, 212, 160, .11), transparent 68%),
-    radial-gradient(520px 380px at 8% 34%, rgba(79, 70, 229, .1), transparent 70%);
+    radial-gradient(680px 420px at 50% -6%, rgba(124, 92, 255, .16), transparent 65%),
+    radial-gradient(520px 360px at 88% 26%, rgba(0, 212, 160, .1), transparent 68%);
 }
-.hero__bg::after {
+
+/* Rejilla difuminada con un degradado opaco encima (mucho mas barato que
+   mask-image con gradiente radial, que obliga a recomponer la capa). */
+.hero__bg::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -221,35 +231,18 @@ ul, ol { list-style: none; }
     linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 62px 62px;
-  opacity: .5;
-  mask-image: radial-gradient(760px 420px at 50% 22%, #000, transparent 78%);
-  -webkit-mask-image: radial-gradient(760px 420px at 50% 22%, #000, transparent 78%);
+  opacity: .45;
+}
+.hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 42%, var(--paper) 92%),
+    linear-gradient(90deg, var(--paper), transparent 22%, transparent 78%, var(--paper));
 }
 
 .hero__inner { position: relative; max-width: 900px; margin: 0 auto; }
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 8px 17px;
-  margin-bottom: 26px;
-  font-size: .84rem;
-  font-weight: 500;
-  color: var(--text-2);
-  background: rgba(255, 255, 255, .8);
-  border: 1px solid var(--line);
-  border-radius: 100px;
-  backdrop-filter: blur(6px);
-}
-.pill__dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0, 212, 160, .22);
-  animation: blip 2.4s infinite;
-}
-@keyframes blip { 50% { box-shadow: 0 0 0 7px rgba(0, 212, 160, 0) } }
 
 .hero h1 {
   font-size: clamp(2.1rem, 6.3vw, 4.15rem);
