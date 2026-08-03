@@ -27,7 +27,8 @@
   --menu-bg: #ffffff;
   --danger: #e5484d;
   --danger-soft: #ffeced;
-  --grid-line: var(--line);
+  /* Mosaico de la rejilla del hero: una linea arriba y otra a la izquierda. */
+  --grid-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='62' height='62'%3E%3Cpath d='M62 0H0v62' fill='none' stroke='%23dfe3ee' stroke-width='1'/%3E%3C/svg%3E");
 
   --shadow: 0 20px 50px -24px rgba(20, 23, 42, .28);
   --shadow-sm: 0 4px 16px -6px rgba(20, 23, 42, .16);
@@ -61,7 +62,7 @@
   --menu-bg: #0e1018;
   --danger: #ff6b6e;
   --danger-soft: rgba(255, 107, 110, .14);
-  --grid-line: #1c2032;
+  --grid-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='62' height='62'%3E%3Cpath d='M62 0H0v62' fill='none' stroke='%231e2334' stroke-width='1'/%3E%3C/svg%3E");
 
   --shadow: 0 20px 50px -24px rgba(0, 0, 0, .8);
   --shadow-sm: 0 4px 16px -6px rgba(0, 0, 0, .6);
@@ -287,39 +288,25 @@ svg:not([fill="currentColor"]) {
   overflow: hidden;
 }
 
-/* El fondo del hero es estatico. Se aisla en su propia capa de composicion
-   para que el scroll no lo repinte: sin esto, los gradientes y la rejilla
-   se recalculan en cada frame y la pagina va a tirones. */
+/* Fondo del hero en UNA sola capa.
+   Antes eran tres elementos apilados del tamaño del hero, y la rejilla se
+   dibujaba con dos linear-gradient repetidos que el navegador evalua sobre
+   toda la superficie en cada repintado. Ahora la rejilla es un mosaico SVG
+   de 62x62 (se rasteriza una vez y despues solo se copia) y los degradados
+   viajan en la misma pila de background-image, asi que es un unico pintado
+   en lugar de tres composiciones. */
 .hero__bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  transform: translateZ(0);
-  contain: strict;
-  background:
-    radial-gradient(680px 420px at 50% -6%, rgba(124, 92, 255, .16), transparent 65%),
-    radial-gradient(520px 360px at 88% 26%, rgba(0, 212, 160, .1), transparent 68%);
-}
-
-/* Rejilla difuminada con un degradado opaco encima (mucho mas barato que
-   mask-image con gradiente radial, que obliga a recomponer la capa). */
-.hero__bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
   background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 62px 62px;
-  opacity: .45;
-}
-.hero__bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, transparent 42%, var(--paper) 92%),
-    linear-gradient(90deg, var(--paper), transparent 22%, transparent 78%, var(--paper));
+    linear-gradient(180deg, transparent 40%, var(--paper) 92%),
+    linear-gradient(90deg, var(--paper), transparent 20%, transparent 80%, var(--paper)),
+    radial-gradient(640px 400px at 50% -6%, rgba(124, 92, 255, .16), transparent 65%),
+    radial-gradient(480px 340px at 88% 26%, rgba(0, 212, 160, .1), transparent 68%),
+    var(--grid-img);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-size: auto, auto, auto, auto, 62px 62px;
 }
 
 .hero__inner { position: relative; max-width: 900px; margin: 0 auto; }
